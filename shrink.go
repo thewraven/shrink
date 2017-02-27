@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"image"
+	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
 	"os"
@@ -59,7 +60,7 @@ var (
 var overrride *bool
 
 func init() {
-	formatCheck = regexp.MustCompile("(?i)\\.(jpg|png)$")
+	formatCheck = regexp.MustCompile("(?i)\\.(jpg|png|jpeg|gif)$")
 	flag.Var(&outdir, "output", `
     output folder for the compressed images.
     If not set, it will override the original image`)
@@ -72,7 +73,7 @@ func init() {
 	flag.Var(&goroutines, "workers", `
    number of the workers that can be spawned concurrently.
    `)
-	overrride = flag.Bool("override", true, `
+	overrride = flag.Bool("override", false, `
 	 define if the output file must be overriden.`)
 	flag.Parse()
 }
@@ -94,7 +95,6 @@ func main() {
 	}
 
 	wg := throttler.New(goroutines.value, len(paths))
-	fmt.Println(len(paths))
 	for _, path := range paths {
 		go func(path string) {
 			err := compress(path)
@@ -139,7 +139,6 @@ func compress(route string) error {
 		Quality: quality.value,
 	})
 	if err != nil {
-		fmt.Println("optimizer")
 		fmt.Println(err)
 	}
 	err = file.Close()
