@@ -55,9 +55,10 @@ var (
 	dir         = checkedStringFlag{value: "."}
 	formatCheck *regexp.Regexp
 	goroutines  = checkedIntFlag{value: 50}
-)
 
-var overrride *bool
+	override          *bool
+	preserveHierarchy *bool
+)
 
 func init() {
 	formatCheck = regexp.MustCompile("(?i)\\.(jpg|png|jpeg|gif)$")
@@ -73,20 +74,24 @@ func init() {
 	flag.Var(&goroutines, "workers", `
    number of the workers that can be spawned concurrently.
    `)
-	overrride = flag.Bool("override", false, `
+	override = flag.Bool("override", false, `
 	 define if the output file must be overriden.`)
+	preserveHierarchy = flag.Bool("hierarchy", false, `
+	 describes whether the structure of the inner folders must be preserved or not`)
 	flag.Parse()
 }
 
 func main() {
 
 	var paths []string
-
+	var subfolders []string
 	filepath.Walk(dir.value, func(path string, info os.FileInfo, err error) error {
 		if !formatCheck.MatchString(strings.ToLower(path)) {
 			return nil
 		}
 		paths = append(paths, path)
+		subfolder, _ := filepath.Rel(dir.value, filepath.Dir(path))
+		subfolders = append(subfolders, subfolder)
 		return nil
 	})
 
@@ -95,23 +100,23 @@ func main() {
 	}
 
 	wg := throttler.New(goroutines.value, len(paths))
-	for _, path := range paths {
-		go func(path string) {
-			err := compress(path)
+	for i := range paths {
+		go func(path, subdir string) {
+			err := compress(path, subdir)
 			if err != nil {
 				fmt.Println(err)
 			} else {
 				fmt.Println("ok", path)
 			}
 			wg.Done(nil)
-		}(path)
+		}(paths[i], subfolders[i])
 
 		wg.Throttle()
 	}
 	_ = wg.Err()
 }
 
-func compress(route string) error {
+func compress(route, subfolder string) error {
 	file, err := os.Open(route)
 	if err != nil {
 		return err
@@ -125,8 +130,14 @@ func compress(route string) error {
 		os.Remove(route)
 		file, err = os.Create(route)
 	} else {
-		path := filepath.Join(outdir.value, filepath.Base(route))
-		if *overrride {
+		var path string
+		if *preserveHierarchy {
+			path = filepath.Join(outdir.value, subfolder, filepath.Base(route))
+			os.MkdirAll(filepath.Dir(path), 0766)
+		} else {
+			path = filepath.Join(outdir.value, filepath.Base(route))
+		}
+		if *override {
 			os.Remove(path)
 		}
 		file, err = os.Create(path)
