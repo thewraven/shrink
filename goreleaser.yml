@@ -1,7 +1,7 @@
 # goreleaser.yml
 # Build customization
 build:
-  binary_name: shrink
+  binary: shrink
   goos:
     - windows
     - darwin
