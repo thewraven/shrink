@@ -2,7 +2,7 @@
 Image compressor for jpg/png/gif/webp formats.
 
 ## Installation
-This is a CLI frontend for the effort of [bradberger](github.com/bradberger) API. Please check it out his [optimizer repo.](github.com/bradberger/optimizer).
+This is a CLI frontend for the effort of [bradberger](https://github.com/bradberger) API. Please check it out his [optimizer repo.](https://github.com/bradberger/optimizer).
 
 Note: webp is only supported on Linux.
 
@@ -10,7 +10,7 @@ Note: webp is only supported on Linux.
 
 If you have a Go installation set up, you can compile shrink yourself:
 
-> go get -u github.com/wraven/shrink
+> go get -u github.com/thewraven/shrink
 
 ### Releases
 
