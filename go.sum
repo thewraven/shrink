@@ -1,0 +1,10 @@
+github.com/bradberger/optimizer v0.0.0-20151002152937-c7e8d06df900 h1:bbMOAYIEO+OHyAo6i/DfcCJsRe5Afp4Qa1y2cC5++wQ=
+github.com/bradberger/optimizer v0.0.0-20151002152937-c7e8d06df900/go.mod h1:v35spGvRfkOnLrPea4ZAq+GKX1nTKaumQdN1s1hZKyI=
+github.com/bradberger/resize v0.0.0-20150527085445-dc93e1b98c57 h1:/3Q6dZCYhcPD2SNlEeJ48mUHHN0i3oPLUv+CsTICZ3E=
+github.com/bradberger/resize v0.0.0-20150527085445-dc93e1b98c57/go.mod h1:vKlZtKqUyX0lQ8a1DI2Ey0mvmhcaUoFO2FKU4+9QsmE=
+github.com/bradberger/webp v0.0.0-20150818021800-e23d7ff7019e h1:mJie2iKkkKwDCOcAP86n/N9VaRNVTtKGBe6jUbh4ivg=
+github.com/bradberger/webp v0.0.0-20150818021800-e23d7ff7019e/go.mod h1:gbuL4tuS5uOMFmdm/0567AqInLmj8/u/Q41e96O5eT8=
+github.com/chai2010/webp v1.1.1 h1:jTRmEccAJ4MGrhFOrPMpNGIJ/eybIgwKpcACsrTEapk=
+github.com/chai2010/webp v1.1.1/go.mod h1:0XVwvZWdjjdxpUEIf7b9g9VkHFnInUSYujwqTLEuldU=
+github.com/nozzle/throttler v0.0.0-20180817012639-2ea982251481 h1:Up6+btDp321ZG5/zdSLo48H9Iaq0UQGthrhWC6pCxzE=
+github.com/nozzle/throttler v0.0.0-20180817012639-2ea982251481/go.mod h1:yKZQO8QE2bHlgozqWDiRVqTFlLQSj30K/6SAK8EeYFw=
